@@ -40,10 +40,15 @@ function doDefaultProject() {
     if [ "$verify" ] || [ "$build" ] || [ "$quick" ] || [ "$quicker" ] || [ "$dobib" ] || \
        [ "$clean" ] || [ "$spelling" ] || [ "$eval" ] || [ "$generate" ] || [ "$deploy" ] || \
        [ "$open" ] || [ "$ci" ] || [ "$unicode" ] || [ "$optimize" ] || [ "$rename" ] || \
-       [ "$bibcheck" ] || [ "$sign" ] || [ "$preflight" ] || [ "$fix" ] || [ "$debug" ] ; then
+       [ "$bibcheck" ] || [ "$sign" ] || [ "$preflight" ] || [ "$fix" ] || [ "$debug" ] || \
+       [ "$deps" ]; then
 
         if [ "$debug" ]; then
             debug "$DIR_TMP" "$FILE_MAIN"
+        fi;
+
+        if [ "$deps" ]; then
+            deps "$FILE_MAIN"
         fi;
 
         if [ "$rename" ]; then
@@ -53,7 +58,7 @@ function doDefaultProject() {
         if [ "$fix" ]; then
             fix "$FILE_BASE" "$DIR_SRC"
         fi;
-        
+
         if [ "$optimize" ]; then
             optimize "$DIR_IMG"
         fi;
@@ -183,10 +188,14 @@ function checkParameter() {
   SYNTAX="Syntax: $0 [-c (clean)] [-b (build)] [-i (bIbtex)] [-r (quicker build)] [-q (quick build)] [-v (verify)] \
      [-w (bib checking)] [-s (spell checking)] [-e (run the evaluation)] [-g (generate images etc.)] \
      [-d (deploy)] [-o (open)] [-f (continuous integration)] [-u (unicode check)] \
-     [-z (optimize)] [-x (X.509 signature)] [-p (preflight)] [-n (rename)] [-m (fix)] [-y (debug)] [-h (help)]";
-  while getopts ":qrchvsbiegdfounwzxmyp" optname
+     [-z (optimize)] [-x (X.509 signature)] [-p (preflight)] [-n (rename)] [-m (fix)] [-y (debug)] \
+     [-t (dependencies)] [-h (help)]";
+  while getopts ":qrchvsbiegdfounwzxmtyp" optname
   do
     case "$optname" in
+      "t")
+        deps=1;
+        ;;
       "y")
         debug=1;
         ;;
@@ -262,6 +271,12 @@ function checkParameter() {
         ;;
     esac
   done
+}
+
+function deps() {
+	_file_main="$1";
+	command -v texliveonfly >/dev/null 2>&1 || { echo "texliveonfly not found!"; exit 1; }
+	texliveonfly "${_file_main}"
 }
 
 function optimize() {
@@ -399,7 +414,7 @@ function rename() {
   TMP_FILE=`mktemp /tmp/config.XXXXXXXXXX`
   sed -e "s/${old}\./${new}./" ${FILE_BASE}.tex > $TMP_FILE
   mv $TMP_FILE ${FILE_BASE}.tex
-  
+
   TMP_FILE=`mktemp /tmp/config.XXXXXXXXXX`
   sed -e "s/${old}\./${new}./" ${FILE_BASE}.config.tex > $TMP_FILE
   mv $TMP_FILE ${FILE_BASE}.config.tex
@@ -523,7 +538,7 @@ function checkSpellingInteractive() {
 function fix() {
 	_file_main="$1";
 	_dir_sources="$2";
-	
+
 	iconv -f UTF8-MAC -t UTF8 "$1.tex" > tmp.tmp && mv tmp.tmp "$1.tex"
 	iconv -f UTF8-MAC -t UTF8 "$1.config.tex" > tmp.tmp && mv tmp.tmp "$1.config.tex"
 	iconv -f UTF8-MAC -t UTF8 "$1.meta.tex" > tmp.tmp && mv tmp.tmp "$1.meta.tex"

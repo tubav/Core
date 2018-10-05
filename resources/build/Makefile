@@ -7,6 +7,7 @@ help:
 	@echo " * full      : Create the PDF file (run LaTeX and BibTeX only)"
 	@echo " * quicker   : Update the PDF file (just run LaTeX twice)"
 	@echo " * quick     : Update the PDF file (just run LaTeX once)"
+	@echo " * deps      : Download LaTeX dependencies"
 	@echo " * bib       : Update the bib file (just run BibTeX/biber once)"
 	@echo " * bibchk    : Run some checks (e.g. biber, bibtex-check)"
 	@echo " * verify    : Run some checks (e.g. l2tabu)"
@@ -102,6 +103,9 @@ quick: fixmod
 
 quicker: fixmod
 	@./build.sh -r
+
+deps: fixmod
+	@./build.sh -t
 
 bib: fixmod
 	@./build.sh -i
