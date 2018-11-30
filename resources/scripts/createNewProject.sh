@@ -23,9 +23,9 @@ wiki_param="?action=edit&template=Publication"
 url_vcs="https://svnsrv.fokus.fraunhofer.de/svn/cc/ngni/tub-av/${vcs_path}"
 url_wiki="https://svnsrv.fokus.fraunhofer.de/cc/ngni/tub-av/wiki/Guides/Research/${wiki_path}"
 
-url_template_base="https://svn.github.com/Thesis"
+url_template_base="https://svn.github.com/tubav"
 url_template="${url_template_base}/${template_type}"
-url_lib="https://github.com/Thesis/Core/trunk"
+url_lib="https://github.com/tubav/Core/trunk"
 project_lib="lib"
 ###############################################################################
 
