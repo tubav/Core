@@ -241,10 +241,10 @@ protrusion=true]{microtype}           % Fonts: margin kerning
  \begingroup\strut%
   \stepcounter{labelnote}\zsaveposx{marginnote-\thelabelnote}
      \ifnum0\zposx{marginnote-\thelabelnote}<19000000
-      \reversemarginpar%
+      \normalmarginpar%
       \oldmarginnote{#1}%
      \else
-      \normalmarginpar%
+      \reversemarginpar%
       \oldmarginnote{#1}%
      \fi
  \endgroup%
