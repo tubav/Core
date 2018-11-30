@@ -8,7 +8,9 @@
 # Defaults
 #===============================================================================
 [[ -z $BIN_BIB ]] && BIN_BIB=bibtex
+[[ -z $BIN_GLS ]] && BIN_GLS=xindy
 command -v $BIN_BIB >/dev/null 2>&1 || { echo >&2 "I require $BIN_BIB but it's not installed.  Aborting."; exit 1; }
+command -v $BIN_GLS >/dev/null 2>&1 || { echo >&2 "I require $BIN_GLS but it's not installed.  Aborting."; exit 2; }
 command -v qpdf >/dev/null 2>&1 && { BIN_PDF="qpdf"; }
 command -v terminal-notifier >/dev/null 2>&1 && { BIN_NOT="terminal-notifier"; }
 
