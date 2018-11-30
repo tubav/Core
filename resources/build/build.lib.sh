@@ -422,6 +422,7 @@ function rename() {
   mv ${FILE_BIB} ${new}.bib
   mv ${FILE_CONFIG} ${new}.config.tex
   mv ${FILE_ACRO} ${new}.acro.tex
+  mv ${FILE_GLS} ${new}.glos.tex
   mv ${FILE_BASE}.tex ${new}.tex
   mv ${FILE_BASE}.meta.tex ${new}.meta.tex
 }
