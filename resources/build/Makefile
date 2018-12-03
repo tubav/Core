@@ -44,7 +44,7 @@ endif
 count:
 	@echo "Counting..."
 	@command -v texcount >/dev/null 2>&1 || { echo >&2 "ERROR: run 'tlmgr install texcount' first."; exit 1; }
-	@texcount -nosub -total -utf8 src/*.tex
+	@texcount -nosub -total -utf8 -letter src/*.tex
 
 ieee:
 	@echo "Changing to IEEE Transaction style..."
