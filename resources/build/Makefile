@@ -48,11 +48,11 @@ count:
 
 ieee:
 	@echo "Changing to IEEE Transaction style..."
-	@find . -iname "*.tex" -depth 1 -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for IEEE style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for LLNCS style)/\1%\2\3/g' {} \;
+	@find . -depth 1 -iname "*.tex" -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for IEEE style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for LLNCS style)/\1%\2\3/g' {} \;
 
 llncs:
 	@echo "Changing to LLNCS Transaction style..."
-	@find . -iname "*.tex" -depth 1 -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for LLNCS style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for IEEE style)/\1%\2\3/g' {} \;
+	@find . -depth 1 -iname "*.tex" -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for LLNCS style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for IEEE style)/\1%\2\3/g' {} \;
 
 content:
 	@read -p "Area: one sentence about the research area (which broad area are we considering?): " area; \
