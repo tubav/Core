@@ -7,6 +7,7 @@ help:
 	@echo " * full      : Create the PDF file (run LaTeX and BibTeX only)"
 	@echo " * quicker   : Update the PDF file (just run LaTeX twice)"
 	@echo " * quick     : Update the PDF file (just run LaTeX once)"
+	@echo " * deps      : Download LaTeX dependencies"
 	@echo " * bib       : Update the bib file (just run BibTeX/biber once)"
 	@echo " * bibchk    : Run some checks (e.g. biber, bibtex-check)"
 	@echo " * verify    : Run some checks (e.g. l2tabu)"
@@ -43,7 +44,7 @@ endif
 count:
 	@echo "Counting..."
 	@command -v texcount >/dev/null 2>&1 || { echo >&2 "ERROR: run 'tlmgr install texcount' first."; exit 1; }
-	@texcount -nosub -total -utf8 src/*.tex
+	@texcount -nosub -total -utf8 -letter src/*.tex
 
 ieee:
 	@echo "Changing to IEEE Transaction style..."
@@ -102,6 +103,9 @@ quick: fixmod
 
 quicker: fixmod
 	@./build.sh -r
+
+deps: fixmod
+	@./build.sh -t
 
 bib: fixmod
 	@./build.sh -i
