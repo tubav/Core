@@ -419,14 +419,13 @@ function rename() {
 
   TMP_FILE=`mktemp /tmp/config.XXXXXXXXXX`
   sed -e "s/${old}\./${new}./" ${FILE_BASE}.config.tex > $TMP_FILE
-  mv $TMP_FILE ${FILE_BASE}.config.tex
-
-  mv ${FILE_BIB} ${new}.bib
-  mv ${FILE_CONFIG} ${new}.config.tex
-  mv ${FILE_ACRO} ${new}.acro.tex
-  mv ${FILE_GLS} ${new}.glos.tex
-  mv ${FILE_BASE}.tex ${new}.tex
-  mv ${FILE_BASE}.meta.tex ${new}.meta.tex
+  [[ -f $TMP_FILE ]] && mv $TMP_FILE ${FILE_BASE}.config.tex
+  [[ -f ${FILE_BIB} ]] && mv ${FILE_BIB} ${new}.bib
+  [[ -f ${FILE_CONFIG} ]] && mv ${FILE_CONFIG} ${new}.config.tex
+  [[ -f ${FILE_ACRO} ]] && mv ${FILE_ACRO} ${new}.acro.tex
+  [[ -f ${FILE_GLS} ]] && mv ${FILE_GLS} ${new}.glos.tex
+  [[ -f ${FILE_BASE}.tex ]] && mv ${FILE_BASE}.tex ${new}.tex
+  [[ -f ${FILE_BASE}.meta.tex ]] && mv ${FILE_BASE}.meta.tex ${new}.meta.tex
 }
 
 function checkUnicode() {
