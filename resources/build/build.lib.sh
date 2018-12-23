@@ -419,14 +419,13 @@ function rename() {
 
   TMP_FILE=`mktemp /tmp/config.XXXXXXXXXX`
   sed -e "s/${old}\./${new}./" ${FILE_BASE}.config.tex > $TMP_FILE
-  mv $TMP_FILE ${FILE_BASE}.config.tex
-
-  mv ${FILE_BIB} ${new}.bib
-  mv ${FILE_CONFIG} ${new}.config.tex
-  mv ${FILE_ACRO} ${new}.acro.tex
-  mv ${FILE_GLS} ${new}.glos.tex
-  mv ${FILE_BASE}.tex ${new}.tex
-  mv ${FILE_BASE}.meta.tex ${new}.meta.tex
+  [[ -f $TMP_FILE ]] && mv $TMP_FILE ${FILE_BASE}.config.tex
+  [[ -f ${FILE_BIB} ]] && mv ${FILE_BIB} ${new}.bib
+  [[ -f ${FILE_CONFIG} ]] && mv ${FILE_CONFIG} ${new}.config.tex
+  [[ -f ${FILE_ACRO} ]] && mv ${FILE_ACRO} ${new}.acro.tex
+  [[ -f ${FILE_GLS} ]] && mv ${FILE_GLS} ${new}.glos.tex
+  [[ -f ${FILE_BASE}.tex ]] && mv ${FILE_BASE}.tex ${new}.tex
+  [[ -f ${FILE_BASE}.meta.tex ]] && mv ${FILE_BASE}.meta.tex ${new}.meta.tex
 }
 
 function checkUnicode() {
@@ -754,10 +753,10 @@ function doCleanup() {
     echo -n "Cleaning up...";
 	rm -rf "$_dir_tmp" 2> /dev/null;
     if [ "$isNotGnu" == "1" ]; then
-      find . -path '*.git' -prune -o -regex ".*\.\(brf\|bak\|aux\|bbl\|blg\|idx\|out\|new\|lot\|loa\|lof\|toc\|log\|ilg\|gls\|glo\|ind\|slg\|syg\|lol\|syi\|maf\|bcf\|spl\|glg\|xdy\|glsdefs\|mtc.*\|fls\|fdb_latexmk\)$" -exec rm {} \;
+      find . -path '*.git' -prune -o -regex ".*\.\(brf\|bak\|aux\|bbl\|blg\|idx\|out\|new\|lot\|loa\|lof\|toc\|log\|ilg\|gls\|glo\|ind\|slg\|syg\|lol\|syi\|maf\|bcf\|spl\|glg\|xdy\|glsdefs\|mtc.*\|fls\|fdb_latexmk\|xref\|tmp\|idv\|lg\|dvi\|4ct\|4tc\)$" -exec rm {} \;
       find . -path '*.git' -prune -o -regex ".*-blx\.bib\|.*biblatex_check\.html\|.*biber_check.txt\|.*\.run\.xml$" -exec rm {} \;
     else
-      find -E . -path '*.git' -prune -o -regex ".*\.(brf|bak|aux|bbl|blg|idx|out|new|lot|loa|lof|toc|log|ilg|ind|gls|glo|slg|syg|syi|lol|maf|spl|glg|xdy|glsdefs|bcf|mtc.*|fls|fdb_latexmk)$" -exec rm {} \;
+      find -E . -path '*.git' -prune -o -regex ".*\.(brf|bak|aux|bbl|blg|idx|out|new|lot|loa|lof|toc|log|ilg|ind|gls|glo|slg|syg|syi|lol|maf|spl|glg|xdy|glsdefs|bcf|mtc.*|fls|fdb_latexmk|xref|tmp|idv|lg|dvi|4ct|4tc)$" -exec rm {} \;
       find -E . -path '*.git' -prune -o -regex ".*-blx\.bib|.*biblatex_check\.html|.*biber_check.txt|.*\.run\.xml$" -exec rm {} \;
     fi
     echo "done";
