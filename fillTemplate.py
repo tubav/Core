@@ -16,6 +16,8 @@ __email__ = "alex@willner.ws"
 __status__ = "Development"
 
 import argparse
+import re
+import fileinput
 
 CONST_TITLE="What is the core summary of the paper?"
 CONST_CONTEXT="What is problem area, why is it interesting?"
@@ -27,22 +29,67 @@ CONST_RESULT="The expected/generated scientific surplus value?"
 CONST_OUTLOOK="How could this work be extended?"
 
 def main(args):
-    """ to be done """
+    """ to be enhanced """
+    print("Title: ",args.title)
+    title = re.compile("(\\\\newcommand{\\\\metaTitle}{).*(})")
+    for line in fileinput.input(['template.meta.tex'], inplace=True):
+        print(title.sub("\\1" + str(args.title) + "\\2", line), end = '')
+
     print("First Name: ",args.firstname)
     print("Last Name: ",args.lastname)
+    author = re.compile("(\\\\newcommand{\\\\metaAuthorFirst}{).*(})")
+    for line in fileinput.input(['template.meta.tex'], inplace=True):
+        print(author.sub("\\1" + str(args.firstname) + " " + str(args.lastname) + "\\2", line), end = '')
+
     print("Mail: ",args.mail)
+    mail = re.compile("(\\\\newcommand{\\\\metaMailFirst}{).*(})")
+    for line in fileinput.input(['template.meta.tex'], inplace=True):
+        print(mail.sub("\\1" + str(args.mail) + "\\2", line), end = '')
+
     print("Institution: ",args.institution)
     print("Country: ",args.country)
     print("City: ",args.city)
     print("Zip: ",args.zip)
-    print("Title: ",args.title)
+    instS = str(args.institution) + ", " + str(args.city) + ", " + str(args.country)
+    inst = re.compile("(\\\\newcommand{\\\\metaInstFirst}{).*(})")
+    for line in fileinput.input(['template.meta.tex'], inplace=True):
+        print(inst.sub("\\1" + instS + "\\2", line), end = '')
+
+
     print("Context: ",args.context)
+    context = re.compile(".*(%%context)")
+    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+        print(context.sub(str(args.context) + " \\1", line), end = '')
+    
     print("Problem: ",args.problem)
+    problem = re.compile(".*(%%problem)")
+    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+        print(problem.sub(str(args.problem) + " \\1", line), end = '')
+
     print("Work: ",args.work)
+    work = re.compile(".*(%%work)")
+    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+        print(work.sub(str(args.work) + " \\1", line), end = '')
+
     print("Approach: ",args.approach)
+    approach = re.compile(".*(%%approach)")
+    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+        print(approach.sub(str(args.approach) + " \\1", line), end = '')
+
     print("Evaluation: ",args.evaluation)
+    evaluation = re.compile(".*(%%evaluation)")
+    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+        print(evaluation.sub(str(args.evaluation) + " \\1", line), end = '')
+
     print("Result: ",args.result)
+    result = re.compile(".*(%%result)")
+    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+        print(result.sub(str(args.result) + " \\1", line), end = '')
+
     print("Outlook: ",args.outlook)
+    outlook = re.compile(".*(%%outlook)")
+    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+        print(outlook.sub(str(args.outlook) + " \\1", line), end = '')
 
 
 if __name__ == "__main__":
