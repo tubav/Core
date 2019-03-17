@@ -60,36 +60,50 @@ def main(args):
     context = re.compile(".*(%%context)")
     for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
         print(context.sub(str(args.context) + " \\1", line), end = '')
+    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+        print(context.sub("\\\\todotext{1 paragraph: " + str(args.context) + "} \\1", line), end = '')
     
     print("Problem: ",args.problem)
     problem = re.compile(".*(%%problem)")
     for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
         print(problem.sub(str(args.problem) + " \\1", line), end = '')
+    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+        print(problem.sub("\\\\todotext{1 paragraph: " + str(args.problem) + "} \\1", line), end = '')
 
     print("Work: ",args.work)
     work = re.compile(".*(%%work)")
     for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
         print(work.sub(str(args.work) + " \\1", line), end = '')
+    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+        print(work.sub("\\\\todotext{1 paragraph: " + str(args.work) + "} \\1", line), end = '')
 
     print("Approach: ",args.approach)
     approach = re.compile(".*(%%approach)")
     for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
         print(approach.sub(str(args.approach) + " \\1", line), end = '')
+    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+        print(approach.sub("\\\\todotext{1 paragraph: " + str(args.approach) + "} \\1", line), end = '')
 
     print("Evaluation: ",args.evaluation)
     evaluation = re.compile(".*(%%evaluation)")
     for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
         print(evaluation.sub(str(args.evaluation) + " \\1", line), end = '')
+    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+        print(evaluation.sub("\\\\todotext{1 paragraph: " + str(args.evaluation) + "} \\1", line), end = '')
 
     print("Result: ",args.result)
     result = re.compile(".*(%%result)")
     for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
         print(result.sub(str(args.result) + " \\1", line), end = '')
+    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+        print(result.sub("\\\\todotext{1 paragraph: " + str(args.result) + "} \\1", line), end = '')
 
     print("Outlook: ",args.outlook)
     outlook = re.compile(".*(%%outlook)")
     for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
         print(outlook.sub(str(args.outlook) + " \\1", line), end = '')
+    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+        print(outlook.sub("\\\\todotext{1 paragraph: " + str(args.outlook) + "} \\1", line), end = '')
 
 
 if __name__ == "__main__":
