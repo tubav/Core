@@ -30,10 +30,11 @@ CONST_OUTLOOK="How could this work be extended?"
 
 def main(args):
     """ to be enhanced """
-    print("Title: ",args.title)
-    title = re.compile("(\\\\newcommand{\\\\metaTitle}{).*(})")
-    for line in fileinput.input(['template.meta.tex'], inplace=True):
-        print(title.sub("\\1" + str(args.title) + "\\2", line), end = '')
+    if args.title is not None:
+        print("Title: ",args.title)
+        title = re.compile("(\\\\newcommand{\\\\metaTitle}{).*(})")
+        for line in fileinput.input(['template.meta.tex'], inplace=True):
+            print(title.sub("\\1" + str(args.title) + "\\2", line), end = '')
 
     print("First Name: ",args.firstname)
     print("Last Name: ",args.lastname)
@@ -55,13 +56,14 @@ def main(args):
     for line in fileinput.input(['template.meta.tex'], inplace=True):
         print(inst.sub("\\1" + instS + "\\2", line), end = '')
 
-
-    print("Context: ",args.context)
-    context = re.compile(".*(%%context)")
-    for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
-        print(context.sub(str(args.context) + " \\1", line), end = '')
-    for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
-        print(context.sub("\\\\todotext{1 paragraph: " + str(args.context) + "} \\1", line), end = '')
+	#todo: refactor and always check for None
+    if args.context is not None:
+        print("Context: ",args.context)
+        context = re.compile(".*(%%context)")
+        for line in fileinput.input(['src/00_abstract.tex'], inplace=True):
+            print(context.sub(str(args.context) + " \\1", line), end = '')
+        for line in fileinput.input(['src/01_introduction.tex'], inplace=True):
+            print(context.sub("\\\\todotext{1 paragraph: " + str(args.context) + "} \\1", line), end = '')
     
     print("Problem: ",args.problem)
     problem = re.compile(".*(%%problem)")
