@@ -244,24 +244,6 @@ protrusion=true]{microtype}           % Fonts: margin kerning
 \usepackage{needspace}                % Avoid hanging notes
 \usepackage{marginnote,zref-savepos}  % Non floating margin notes
 
-%for two-column layout
-\newcounter{labelnote}
-\makeatletter
-\let\oldmarginnote\marginnote%
-\renewcommand*{\marginnote}[1]{%
- \begingroup\strut%
-  \stepcounter{labelnote}\zsaveposx{marginnote-\thelabelnote}
-     \ifnum0\zposx{marginnote-\thelabelnote}<19000000
-      \normalmarginpar%
-      \oldmarginnote{#1}%
-     \else
-      \reversemarginpar%
-      \oldmarginnote{#1}%
-     \fi
- \endgroup%
-}
-\makeatother
-
 %\setlength{\marginparwidth}{0.7in}
 \newcommand\sidenote[1]{\mbox{}%
   \marginnote{%
