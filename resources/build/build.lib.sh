@@ -277,6 +277,7 @@ function checkParameter() {
 
 function deps() {
 	_file_main="$1";
+	tlmgr install texliveonfly biber collection-fontsrecommended IEEEtran xindy
 	command -v texliveonfly >/dev/null 2>&1 || { echo "texliveonfly not found!"; exit 1; }
 	texliveonfly "${_file_main}"
 }
