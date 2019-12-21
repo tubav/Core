@@ -181,6 +181,16 @@ protrusion=true]{microtype}           % Fonts: margin kerning
     }
 }
 
+\newcommand\acc[1]{%
+{%
+\renewcommand{\url}[1]{}%
+\renewcommand{\footnote}[1]{}%
+\renewcommand{\cite}[1]{}%
+\renewcommand{\nobreakspace}{}%
+\let\protect\relax%
+\ac*{#1}%
+}%
+}
 \newcommand\aclc[1]{%
 {%
 \renewcommand{\url}[1]{}%
