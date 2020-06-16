@@ -44,15 +44,15 @@ endif
 count:
 	@echo "Counting..."
 	@command -v texcount >/dev/null 2>&1 || { echo >&2 "ERROR: run 'tlmgr install texcount' first."; exit 1; }
-	@texcount -nosub -total -utf8 src/*.tex
+	@texcount -nosub -total -utf8 -letter src/*.tex
 
 ieee:
 	@echo "Changing to IEEE Transaction style..."
-	@find . -iname "*.tex" -depth 1 -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for IEEE style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for LLNCS style)/\1%\2\3/g' {} \;
+	@find . -maxdepth 1 -type f -iname "*.tex" -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for IEEE style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for LLNCS style)/\1%\2\3/g' {} \;
 
 llncs:
 	@echo "Changing to LLNCS Transaction style..."
-	@find . -iname "*.tex" -depth 1 -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for LLNCS style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for IEEE style)/\1%\2\3/g' {} \;
+	@find . -maxdepth 1 -type f -iname "*.tex" -exec perl -p -i -e 's/([\s])*%+([^%]*)(% enable for LLNCS style)/\1\2\3/g' {} \; -exec perl -p -i -e 's/([\s])*([^%]*)(% enable for IEEE style)/\1%\2\3/g' {} \;
 
 content:
 	@read -p "Area: one sentence about the research area (which broad area are we considering?): " area; \
@@ -87,7 +87,7 @@ debug: fixmod
 	@./build.sh -y
 
 todo:
-	@find src -iname "*.tex" -exec sh -c "grep -Hin 'TODO{' {}|sed 's/^\(.*\):\(.*\):.*{\(.*\)}/ * TODO \"\3\" in file \1 in line \2/'" \;
+	@find src -iname "*.tex" -exec sh -c "grep -Hin 'TODO.*{' {}|sed 's/^\([^:]*\):\([0-9]*\):.*todo[^{]*{\(.*\)}.*/ * TODO \"\3\" in file \1 in line \2/'" \;
 
 clean: fixmod
 	@./build.sh -c
