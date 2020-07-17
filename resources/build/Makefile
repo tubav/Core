@@ -38,7 +38,7 @@ overleaf:
 ifeq ($(strip $(OID)),)
 	@echo "Seems overleaf is not being used"
 else
-	@open https://www.overleaf.com/$(OID)
+	@open https://www.overleaf.com/project/$(OID)
 endif
 
 count:
