@@ -510,6 +510,8 @@ function checkSpelling() {
       --add-tex-command="acp po" \
       --add-tex-command="acs po" \
       --add-tex-command="Cref po" \
+      --add-tex-command="todo po" \
+      --add-tex-command="lstset po" \
       list`;
     if [ "$found" != "" ]; then
         echo "warning: Please add via aspell or correct in '$_filename' the word(s): $found";
@@ -535,6 +537,8 @@ function checkSpellingInteractive() {
         --add-tex-command="acp po" \
         --add-tex-command="acs po" \
         --add-tex-command="Cref po" \
+        --add-tex-command="todo po" \
+        --add-tex-command="lstset po" \
         check {} \;
 }
 
