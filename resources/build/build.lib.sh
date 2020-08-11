@@ -502,16 +502,17 @@ function checkSpelling() {
       --home-dir=$_dir_resources \
       --lang=$_language \
       --dont-backup --encoding=utf-8 --mode=tex --dont-tex-check-comments \
-      --add-tex-command="bibliographystyle po" \
-      --add-tex-command="bibliography po" \
-      --add-tex-command="eqref po" \
-      --add-tex-command="ac po" \
-      --add-tex-command="aclu po" \
-      --add-tex-command="acp po" \
-      --add-tex-command="acs po" \
-      --add-tex-command="Cref po" \
-      --add-tex-command="todo po" \
-      --add-tex-command="lstset po" \
+      --add-tex-command="bibliographystyle op" \
+      --add-tex-command="bibliography op" \
+      --add-tex-command="eqref op" \
+      --add-tex-command="ac op" \
+      --add-tex-command="aclu op" \
+      --add-tex-command="acp op" \
+      --add-tex-command="acs op" \
+      --add-tex-command="Cref op" \
+      --add-tex-command="todo op" \
+      --add-tex-command="lstset op" \
+      --add-tex-command="newrefcontext op" \
       list`;
     if [ "$found" != "" ]; then
         echo "warning: Please add via aspell or correct in '$_filename' the word(s): $found";
@@ -529,16 +530,17 @@ function checkSpellingInteractive() {
       aspell --home-dir=$_dir_resources \
         --lang=$_language \
         --dont-backup --encoding=utf-8 --mode=tex --dont-tex-check-comments \
-        --add-tex-command="bibliographystyle po" \
-        --add-tex-command="bibliography po" \
-        --add-tex-command="eqref po" \
-        --add-tex-command="ac po" \
-        --add-tex-command="aclu po" \
-        --add-tex-command="acp po" \
-        --add-tex-command="acs po" \
-        --add-tex-command="Cref po" \
-        --add-tex-command="todo po" \
-        --add-tex-command="lstset po" \
+        --add-tex-command="bibliographystyle op" \
+        --add-tex-command="bibliography op" \
+        --add-tex-command="eqref op" \
+        --add-tex-command="ac op" \
+        --add-tex-command="aclu op" \
+        --add-tex-command="acp op" \
+        --add-tex-command="acs op" \
+        --add-tex-command="Cref op" \
+        --add-tex-command="todo op" \
+        --add-tex-command="lstset op" \
+        --add-tex-command="newrefcontext op" \
         check {} \;
 }
 
