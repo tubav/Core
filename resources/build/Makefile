@@ -89,6 +89,10 @@ debug: fixmod
 todo:
 	@find src -iname "*.tex" -exec sh -c "grep -Hin 'TODO.*{' {}|sed 's/^\([^:]*\):\([0-9]*\):.*todo[^{]*{\(.*\)}.*/ * TODO \"\3\" in file \1 in line \2/'" \;
 
+duplicates:
+# todo: enhance to be case insensitive
+	@grep -HIirnsEo '(\b.+)\s+\1\b' src/*.tex || true
+
 clean: fixmod
 	@./build.sh -c
 
