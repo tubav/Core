@@ -88,6 +88,7 @@ protrusion=true]{microtype}           % Fonts: margin kerning
 {0.31,0.46,.64}                       %
 \usepackage{wrapfig}                  % Use floating images
 \usepackage{stfloats}                 % Makes LaTeX honour ‘[b]’ placement
+\usepackage[detect-weight=true, detect-family=true]{siunitx}  % For SI units
 \usepackage{amsmath}                  % For eqref
 \usepackage[olditem,oldenum]{paralist}% For inline lists (options for MDPI)
 %\usepackage{fixltx2e}                 % Provides fixes for LaTeX (not needed for anymore since 2015)
@@ -113,6 +114,9 @@ protrusion=true]{microtype}           % Fonts: margin kerning
 \usepackage{blindtext}                % insert blind texts
 %\usepackage{cleveref}                 % To ref footnotes twice (use after hyperref)
 %\crefformat{footnote}{#2\footnotemark[#1]#3}
+
+% on some systems, `texlive-full` does not contain accessibility.sty
+\IfFileExists{accessibility.sty}{\usepackage[tagged,highstructure]{accessibility}}{}
 
 \makeatletter
 \newcommand*{\etc}{%
@@ -183,11 +187,22 @@ protrusion=true]{microtype}           % Fonts: margin kerning
     }
 }
 
+\newcommand\acc[1]{%
+{%
+\renewcommand{\url}[1]{}%
+\renewcommand{\footnote}[1]{}%
+\renewcommand{\cite}[1]{}%
+\renewcommand{\nobreakspace}{}%
+\let\protect\relax%
+\ac*{#1}%
+}%
+}
 \newcommand\aclc[1]{%
 {%
 \renewcommand{\url}[1]{}%
 \renewcommand{\footnote}[1]{}%
 \renewcommand{\cite}[1]{}%
+\renewcommand{\nobreakspace}{}%
 \let\protect\relax%
 \acl*{#1}%
 }%
@@ -197,6 +212,7 @@ protrusion=true]{microtype}           % Fonts: margin kerning
 \renewcommand{\url}[1]{}%
 \renewcommand{\footnote}[1]{}%
 \renewcommand{\cite}[1]{}%
+\renewcommand{\nobreakspace}{}%
 \let\protect\relax%
 \acf*{#1}%
 }%
@@ -245,24 +261,6 @@ protrusion=true]{microtype}           % Fonts: margin kerning
 \usepackage{ifoddpage}                % Move notes to correct page
 \usepackage{needspace}                % Avoid hanging notes
 \usepackage{marginnote,zref-savepos}  % Non floating margin notes
-
-%for two-column layout
-\newcounter{labelnote}
-\makeatletter
-\let\oldmarginnote\marginnote%
-\renewcommand*{\marginnote}[1]{%
- \begingroup\strut%
-  \stepcounter{labelnote}\zsaveposx{marginnote-\thelabelnote}
-     \ifnum0\zposx{marginnote-\thelabelnote}<19000000
-      \normalmarginpar%
-      \oldmarginnote{#1}%
-     \else
-      \reversemarginpar%
-      \oldmarginnote{#1}%
-     \fi
- \endgroup%
-}
-\makeatother
 
 %\setlength{\marginparwidth}{0.7in}
 \newcommand\sidenote[1]{\mbox{}%

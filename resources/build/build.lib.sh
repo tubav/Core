@@ -277,6 +277,7 @@ function checkParameter() {
 
 function deps() {
 	_file_main="$1";
+	tlmgr install texliveonfly biber collection-fontsrecommended IEEEtran xindy
 	command -v texliveonfly >/dev/null 2>&1 || { echo "texliveonfly not found!"; exit 1; }
 	texliveonfly "${_file_main}"
 }
@@ -509,6 +510,8 @@ function checkSpelling() {
       --add-tex-command="acp po" \
       --add-tex-command="acs po" \
       --add-tex-command="Cref po" \
+      --add-tex-command="todo po" \
+      --add-tex-command="lstset po" \
       list`;
     if [ "$found" != "" ]; then
         echo "warning: Please add via aspell or correct in '$_filename' the word(s): $found";
@@ -534,6 +537,8 @@ function checkSpellingInteractive() {
         --add-tex-command="acp po" \
         --add-tex-command="acs po" \
         --add-tex-command="Cref po" \
+        --add-tex-command="todo po" \
+        --add-tex-command="lstset po" \
         check {} \;
 }
 

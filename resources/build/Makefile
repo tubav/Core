@@ -38,7 +38,7 @@ overleaf:
 ifeq ($(strip $(OID)),)
 	@echo "Seems overleaf is not being used"
 else
-	@open https://www.overleaf.com/$(OID)
+	@open https://www.overleaf.com/project/$(OID)
 endif
 
 count:
@@ -87,7 +87,7 @@ debug: fixmod
 	@./build.sh -y
 
 todo:
-	@find src -iname "*.tex" -exec sh -c "grep -Hin 'TODO{' {}|sed 's/^\(.*\):\(.*\):.*{\(.*\)}/ * TODO \"\3\" in file \1 in line \2/'" \;
+	@find src -iname "*.tex" -exec sh -c "grep -Hin 'TODO.*{' {}|sed 's/^\([^:]*\):\([0-9]*\):.*todo[^{]*{\(.*\)}.*/ * TODO \"\3\" in file \1 in line \2/'" \;
 
 clean: fixmod
 	@./build.sh -c
