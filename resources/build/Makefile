@@ -12,6 +12,8 @@ help:
 	@echo " * bibchk    : Run some checks (e.g. biber, bibtex-check)"
 	@echo " * verify    : Run some checks (e.g. l2tabu)"
 	@echo " * spell     : Check for spelling errors (aspell)"
+	@echo " * dups      : Check for duplicated words"
+	@echo " * acros     : Check for missing acronym definitions"
 	@echo " * eval      : Run evaluation scripts (e.g. R)"
 	@echo " * generate  : Generate images (gnuplot, R, dot/graphviz, ...)"
 	@echo " * deploy    : Deploy the PDF file to a directory (e.g. for automated builds)"
@@ -89,9 +91,12 @@ debug: fixmod
 todo:
 	@find src -iname "*.tex" -exec sh -c "grep -Hin 'TODO.*{' {}|sed 's/^\([^:]*\):\([0-9]*\):.*todo[^{]*{\(.*\)}.*/ * TODO \"\3\" in file \1 in line \2/'" \;
 
-duplicates:
+dups:
 # todo: enhance to be case insensitive
 	@grep -HIirnsEo '(\b.+)\s+\1\b' src/*.tex || true
+
+acros:
+	@grep -Eo "^\s*[^%][^{=]*[A-Z]{2,}" src/*.tex || true
 
 clean: fixmod
 	@./build.sh -c
