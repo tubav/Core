@@ -508,6 +508,7 @@ function checkSpelling() {
       --add-tex-command="ac op" \
       --add-tex-command="aclu op" \
       --add-tex-command="acp op" \
+      --add-tex-command="acc op" \
       --add-tex-command="acs op" \
       --add-tex-command="Cref op" \
       --add-tex-command="todo op" \
@@ -536,6 +537,7 @@ function checkSpellingInteractive() {
         --add-tex-command="ac op" \
         --add-tex-command="aclu op" \
         --add-tex-command="acp op" \
+        --add-tex-command="acc op" \
         --add-tex-command="acs op" \
         --add-tex-command="Cref op" \
         --add-tex-command="todo op" \

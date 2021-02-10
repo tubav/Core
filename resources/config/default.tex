@@ -116,7 +116,9 @@ protrusion=true]{microtype}           % Fonts: margin kerning
 %\crefformat{footnote}{#2\footnotemark[#1]#3}
 
 % on some systems, `texlive-full` does not contain accessibility.sty
-\IfFileExists{accessibility.sty}{\usepackage[tagged,highstructure]{accessibility}}{}
+% on some systems, it clashes with line numbers
+% so disabling the package
+%\IfFileExists{accessibility.sty}{\usepackage[tagged,highstructure]{accessibility}}{}
 
 \makeatletter
 \newcommand*{\etc}{%
@@ -194,7 +196,7 @@ protrusion=true]{microtype}           % Fonts: margin kerning
 \renewcommand{\cite}[1]{}%
 \renewcommand{\nobreakspace}{}%
 \let\protect\relax%
-\ac*{#1}%
+\ac{#1}%
 }%
 }
 \newcommand\aclc[1]{%
