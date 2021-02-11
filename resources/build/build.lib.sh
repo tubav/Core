@@ -980,8 +980,9 @@ L2TABU='\\usepackage.*{a4#\\oddsidemargin#\\hoffset#\\voffset#\\baselinestretch#
 #===============================================================================
 find -E . -maxdepth 1 > /dev/null 2>&1
 isNotGnu=$?
-IFS_ORG="$IFS";
-FILE_LOG="$0.log";
+IFS_ORG="$IFS"
+SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+FILE_LOG="$SCRIPTPATH/$0.log"
 if [ "$MIN_ABSTRACT" == "" ]; then
   MIN_ABSTRACT="100";
 fi
