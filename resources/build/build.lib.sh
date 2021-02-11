@@ -806,12 +806,11 @@ function debug() {
 	_file_main="$2";
   mkdir -p "${_dir_tmp}"
 	echo -n "Running LaTeX in debug mode...";
-    pdflatex \
+  pdflatex \
       -halt-on-error \
       -file-line-error \
       -output-directory $_dir_tmp \
 	    $_file_main
-	echo "done";
 }
 
 function doBibtex() {
