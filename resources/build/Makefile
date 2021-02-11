@@ -47,7 +47,7 @@ endif
 
 deps-mac:
 	@echo "Updating brew..."
-	@#brew install mactex
+	@brew install mactex
 	@brew install plantuml graphviz gnuplot aspell r
 
 deps-lin:
