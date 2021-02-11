@@ -51,7 +51,7 @@ deps-mac:
 	@echo "Installing Tools..."
 	@brew install plantuml graphviz gnuplot aspell r
 	@echo "Installing LaTeX Tools..."
-	@tlmgr init-usertree
+	@eval "$(/usr/libexec/path_helper)"
 	@tlmgr install texliveonfly biber collection-fontsrecommended IEEEtran xindy
 
 deps-lin:
