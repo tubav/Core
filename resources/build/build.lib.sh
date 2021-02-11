@@ -458,8 +458,8 @@ function checkEnvironment() {
 function checkError() {
     _exitcode="$1";
     if [ "$_exitcode" != "0" ]; then
-        echo "WARNING: Command failed. The build might fail!! See $FILE_LOG.";
-        #exit $_exitcode
+        echo "WARNING: Command failed with code $_exitcode. See $FILE_LOG.";
+        exit $_exitcode
     fi
 }
 
