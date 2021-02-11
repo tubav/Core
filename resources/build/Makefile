@@ -7,7 +7,8 @@ help:
 	@echo " * full      : Create the PDF file (run LaTeX and BibTeX only)"
 	@echo " * quicker   : Update the PDF file (just run LaTeX twice)"
 	@echo " * quick     : Update the PDF file (just run LaTeX once)"
-	@echo " * deps-lin  : Download LaTeX dependencies (Linux)"
+	@echo " * deps-lin  : Download LaTeX dependencies (Linux/apt)"
+	@echo " * deps-mac  : Download LaTeX dependencies (macOS/brew)"
 	@echo " * deps      : Download LaTeX dependencies (tlmgr)"
 	@echo " * bib       : Update the bib file (just run BibTeX/biber once)"
 	@echo " * bibchk    : Run some checks (e.g. biber, bibtex-check)"
@@ -43,6 +44,13 @@ ifeq ($(strip $(OID)),)
 else
 	@open https://www.overleaf.com/project/$(OID)
 endif
+
+deps-mac:
+	@echo "Updating brew..."
+	@brew update
+	@brew cask install mactex
+	@brew tap homebrew/science
+	@brew install plantuml graphviz gnuplot r aspell --with-lang-de
 
 deps-lin:
 	@echo "Updating apt..."
