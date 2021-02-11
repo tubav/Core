@@ -48,7 +48,7 @@ deps-lin:
 	@echo "Updating apt..."
 	@sudo apt update
 	@echo "Installing LaTeX..."
-	@sudo apt -y install biber xindy texlive-base texlive-latex-base texlive-extra-utils texlive-latex-extra texlive-science texlive-publishers lmodern
+	@sudo apt -y install biber xindy texlive-base texlive-latex-base texlive-extra-utils texlive-latex-extra texlive-bibtex-extra texlive-science texlive-publishers lmodern
 	@echo "Installing tools..."
 	@sudo apt -y install aspell graphviz gnuplot r-base plantuml
 
