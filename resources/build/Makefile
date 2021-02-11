@@ -46,9 +46,12 @@ else
 endif
 
 deps-mac:
-	@echo "Updating brew..."
+	@echo "Installing LaTeX..."
 	@brew install mactex
+	@echo "Installing Tools..."
 	@brew install plantuml graphviz gnuplot aspell r
+	@echo "Installing LaTeX Tools..."
+	@tlmgr install texliveonfly biber collection-fontsrecommended IEEEtran xindy
 
 deps-lin:
 	@echo "Updating apt..."
