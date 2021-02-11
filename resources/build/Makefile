@@ -7,7 +7,8 @@ help:
 	@echo " * full      : Create the PDF file (run LaTeX and BibTeX only)"
 	@echo " * quicker   : Update the PDF file (just run LaTeX twice)"
 	@echo " * quick     : Update the PDF file (just run LaTeX once)"
-	@echo " * deps      : Download LaTeX dependencies"
+	@echo " * deps-lin  : Download LaTeX dependencies (Linux)"
+	@echo " * deps      : Download LaTeX dependencies (tlmgr)"
 	@echo " * bib       : Update the bib file (just run BibTeX/biber once)"
 	@echo " * bibchk    : Run some checks (e.g. biber, bibtex-check)"
 	@echo " * verify    : Run some checks (e.g. l2tabu)"
@@ -42,6 +43,14 @@ ifeq ($(strip $(OID)),)
 else
 	@open https://www.overleaf.com/project/$(OID)
 endif
+
+deps-lin:
+	@echo "Updating apt..."
+	@sudo apt update
+	@echo "Installing LaTeX..."
+	@sudo apt -y install biber xindy texlive-base texlive-latex-base texlive-extra-utils texlive-latex-extra texlive-science texlive-publishers
+	@echo "Installing tools..."
+	@sudo apt -y install aspell graphviz gnuplot r-base plantuml
 
 count:
 	@echo "Counting..."
