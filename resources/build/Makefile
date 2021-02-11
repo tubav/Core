@@ -51,7 +51,8 @@ deps-mac:
 	@echo "Installing Tools..."
 	@brew install plantuml graphviz gnuplot aspell r
 	@echo "Installing LaTeX Tools..."
-	@/Library/TeX/texbin/tlmgr install texliveonfly biber collection-fontsrecommended IEEEtran xindy
+	@tlmgr init-usertree
+	@tlmgr install texliveonfly biber collection-fontsrecommended IEEEtran xindy
 
 deps-lin:
 	@echo "Updating apt..."
