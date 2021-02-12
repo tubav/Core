@@ -863,13 +863,13 @@ function doGraphviz() {
 	[ "`ls $_dir_img/*.gv 2>/dev/null`" == "" ] && echo "skipped" && return
 	startLogging;
 	for gv in $_dir_img/*.gv; do
-        file=${gv##*/}
-                file=${file%%.*}
-		dot -Tps2 -o $_dir_img/$file.ps $gv;
-		pstopdf $_dir_img/$file.ps $_dir_img/$file.pdf
-		rm $_dir_img/$file.ps
-		errorlevel=$?
-		if [ "$errorlevel" != "0" ]; then break; fi
+    file="${gv##*/}"
+    file="${file%%.*}"
+    dot -Tps2 -o "$_dir_img/$file.ps" "$gv";
+    pstopdf "$_dir_img/$file.ps" "$_dir_img/$file.pdf" || ps2pdf "$_dir_img/$file.ps" "$_dir_img/$file.pdf"
+    rm "$_dir_img/$file.ps"
+    errorlevel=$?
+    if [ "$errorlevel" != "0" ]; then break; fi
 	done
 	endLogging;
 	checkError $errorlevel;
