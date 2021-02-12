@@ -7,6 +7,7 @@
 #===============================================================================
 # Defaults
 #===============================================================================
+set -e # exit when any command fails
 [[ -z $BIN_BIB ]] && BIN_BIB=bibtex
 [[ -z $BIN_GLS ]] && BIN_GLS=xindy
 command -v $BIN_BIB >/dev/null 2>&1 || { echo >&2 "I require $BIN_BIB but it's not installed.  Aborting."; exit 1; }
@@ -19,11 +20,11 @@ command -v terminal-notifier >/dev/null 2>&1 && { BIN_NOT="terminal-notifier"; }
 #===============================================================================
 function startLogging() {
     if [ "$DEBUG" -eq "0" ]; then
-        touch "$FILE_LOG";
-        exec 6>&1        # Saves stdout in file descriptor #6.
-        exec 7>&2        # Saves stderr in file descriptor #7.
-        exec 1> $FILE_LOG # stdout replaced with log file.
-        exec 2> $FILE_LOG # stderr replaced with log file.
+        touch "$FILE_LOG"
+        exec 6>&1         # Saves stdout in file descriptor #6.
+        exec 7>&2         # Saves stderr in file descriptor #7.
+        exec 1> "$FILE_LOG" # stdout replaced with log file.
+        exec 2> "$FILE_LOG" # stderr replaced with log file.
     fi;
 }
 
@@ -136,10 +137,7 @@ function doDefaultProject() {
         	fi
         	if [ "$DOBIBTEX" == "1" ]; then
             	doBibtex "$DIR_TMP" "$FILE_MAIN" "$FILE_BIB" "$DIR_RES";
-            fi
-#        	if [ "$DOBIBTEX" == "1" ]; then
-#            	doBibtex "$DIR_TMP" "$FILE_MAIN" "$FILE_BIB" "$DIR_RES";
-#            fi
+          fi
         	doLatex "$DIR_TMP" "$FILE_MAIN" "-draftmode";
         	doLatex "$DIR_TMP" "$FILE_MAIN" "-draftmode";
         fi;
@@ -157,7 +155,7 @@ function doDefaultProject() {
             NAME=`basename $FILE_MAIN .tex`;
             cp $DIR_TMP/$NAME.pdf $NAME.pdf
             [ "1" == "$DOOPT" ] && [ -n "$BIN_PDF" ] && ( $BIN_PDF --linearize $DIR_TMP/$NAME.pdf $NAME.pdf )
-            showWarnings;
+            showWarnings
             echo "File created: $NAME.pdf";
             [ -z "$BIN_PDF" ] || ( echo -n "Pages: "; $BIN_PDF --show-npages $NAME.pdf )
             [ -z "$BIN_NOT" ] || $BIN_NOT -title "LaTeX" -message "Build ready" -open "file://$(pwd)/$NAME.pdf"
@@ -446,7 +444,7 @@ function checkEnvironment() {
     for filename in $_filenames; do
       if [ "`(which $filename; echo $?)|tail -n 1`" != "0" ]; then
         echo "WARNING! The package '$filename' was not found. The build might fail!!";
-        _error="1";
+        #_error="1";
       fi;
     done;
     #if [ "$_error" != "0" ]; then
@@ -735,16 +733,16 @@ function showHelp() {
 }
 
 function showWarnings() {
-    #WARNINGS=`grep -i warning $FILE_LOG|grep -v ifpdftex`;
-	#WARNINGS=`grep -iE "^! |Warning|Overfull|Underfull" $FILE_LOG|grep -vE "addtolists|tocbasic|selectfont|fontenc|pickup@font|scrhack|float@listhead|minitoc|expanded"`;
-  #WARNINGS=$(grep -vE "Unused label \`ac:" $FILE_LOG|grep -A2 -B2 -iE "^! |Warning"|grep -vE "addtolists|tocbasic|selectfont|fontenc|pickup@font|scrhack|float@listhead|minitoc|expanded|Unsupported");
-  WARNINGS=$(grep -vE "Unused label \`ac:|Unused label \`sub|addtolists|tocbasic|selectfont|fontenc|pickup@font|scrhack|float@listhead|minitoc|expanded|Unsupported|ALPHA VERSION!" $FILE_LOG|grep -A2 -B2 -iE "^! |Warning");
-    if [ "$WARNINGS" != "" ]; then
-      echo "-------------";
-      cat "$WARNINGS";
-      echo "-------------";
-      return 1
-    fi
+  #WARNINGS=`grep -i warning $FILE_LOG|grep -v ifpdftex`
+	#WARNINGS=`grep -iE "^! |Warning|Overfull|Underfull" $FILE_LOG|grep -vE "addtolists|tocbasic|selectfont|fontenc|pickup@font|scrhack|float@listhead|minitoc|expanded"`
+  #WARNINGS=$(grep -vE "Unused label \`ac:" $FILE_LOG|grep -A2 -B2 -iE "^! |Warning"|grep -vE "addtolists|tocbasic|selectfont|fontenc|pickup@font|scrhack|float@listhead|minitoc|expanded|Unsupported")
+  WARNINGS=$(grep -vE "Unused label \`ac:|Unused label \`sub|addtolists|tocbasic|selectfont|fontenc|pickup@font|scrhack|float@listhead|minitoc|expanded|Unsupported|ALPHA VERSION!" "$FILE_LOG"|grep -A2 -B2 -iE "^! |Warning"||:)
+  if [ "$WARNINGS" != "" ]; then
+    echo "-------------";
+    cat "$WARNINGS" || :
+    echo "-------------";
+    # return 1
+  fi
 }
 
 function doSetup() {
@@ -821,27 +819,27 @@ function doBibtex() {
   _ext="$5";
   echo -n "Running BibTeX and Glossary...";
 
-    startLogging;
-    cp -r "$_dir_res" "$_dir_tmp";
-    cp "$_file_bib" "$_dir_tmp";
+  startLogging;
+    cp -r "$_dir_res" "$_dir_tmp" || :
+    cp "$_file_bib" "$_dir_tmp" || :
     # TODO: refactor the next line!
-    cp -R "$DIR_LIB" "$_dir_tmp";
-    cp *.bib "$_dir_tmp";
-    cp *.bst "$_dir_tmp";
-    cp *.cls "$_dir_tmp";
-    cd "$_dir_tmp" || ( echo "dir not found" ; exit 1)
-    file_bibtex=`basename $_file_main .tex`"$_ext";
-
-    makeglossaries $file_bibtex
-    $BIN_BIB $file_bibtex
+    # cp -R "$DIR_LIB" "$_dir_tmp" || :
+    cp *.bib "$_dir_tmp" || :
+    cp *.bst "$_dir_tmp" || :
+    cp *.cls "$_dir_tmp" || :
+    cd "$_dir_tmp" || ( echo "dir not found" ; exit 1 )
+    file_base=`basename $_file_main .tex`
+    file_glos="$file_base.bst";
+    [ -f "$file_glos" ] && makeglossaries $file_base
+    $BIN_BIB $file_base
     errorlevel=$?
-    found=`$BIN_BIB $file_bibtex | grep -iE "warn|illegal|repeated|skipping|couldn't" | grep -v junk`
+    found=`$BIN_BIB $file_base | grep -iE "warn|illegal|repeated|skipping|couldn't" | grep -v junk` || :
     cd - || ( echo "dir not found" ; exit 1)
 	endLogging;
     if [ "$found" != "" ]; then
     	echo "warning: BibTeX: $found";
     fi
-	checkError $errorlevel;
+	checkError $errorlevel
 	echo "done";
 }
 
@@ -868,7 +866,7 @@ function doGraphviz() {
         file=${gv##*/}
                 file=${file%%.*}
 		dot -Tps2 -o $_dir_img/$file.ps $gv;
-		ps2pdf $_dir_img/$file.ps $_dir_img/$file.pdf
+		pstopdf $_dir_img/$file.ps $_dir_img/$file.pdf
 		rm $_dir_img/$file.ps
 		errorlevel=$?
 		if [ "$errorlevel" != "0" ]; then break; fi
