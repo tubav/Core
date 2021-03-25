@@ -766,6 +766,7 @@ function doCleanup() {
       find -E . -path '*.git' -prune -o -regex ".*\.(brf|bak|aux|bbl|blg|idx|out|new|lot|loa|lof|toc|log|ilg|ind|gls|glo|slg|syg|syi|lol|maf|spl|glg|xdy|glsdefs|bcf|mtc.*|fls|fdb_latexmk|xref|tmp|idv|lg|dvi|4ct|4tc)$" -exec rm {} \;
       find -E . -path '*.git' -prune -o -regex ".*-blx\.bib|.*biblatex_check\.html|.*biber_check.txt|.*\.run\.xml$" -exec rm {} \;
     fi
+    command -v biber >/dev/null 2>&1 && rm -rf `biber --cache`
     echo "done";
 }
 
